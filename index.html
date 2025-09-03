@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <title>Interactive Keyboards</title>
+</head>
+<body>
+  <div class="product-box">
+    <div class="visual-container">
+      <div class="viewer-frame">
+        <model-viewer src="https://assets.codepen.io/3421562/leaves_keyboard.glb" camera-orbit="64deg 25deg 64m" shadow-intensity="0.4"></model-viewer>
+      </div>
+    </div>
+    <div class="glass-layer">
+      <div class="blur-grid"><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    <div class="info-panel">
+      <h2>LeafKey</h2>
+      <p>Experience the serenity of nature with every keystroke.</p>
+      <div class="color-palette">
+        <div onclick="adjustModelColor(this, 0);" style="background: #f2c173;"></div>
+        <div onclick="adjustModelColor(this, 60);" style="background: #96dd78;"></div>
+        <div onclick="adjustModelColor(this, 110);" style="background: #6ee5bc;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="product-box">
+    <div class="visual-container">
+      <div class="viewer-frame">
+        <model-viewer src="https://assets.codepen.io/3421562/topo_keyboard.glb" camera-orbit="64deg 25deg 64m" shadow-intensity="0.4"></model-viewer>
+      </div>
+    </div>
+    <div class="glass-layer">
+      <div class="blur-grid"><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    <div class="info-panel">
+      <h2>TopoKey</h2>
+      <p>Illuminate your workspace with vibrant topographic design.</p>
+      <div class="color-palette">
+        <div onclick="adjustModelColor(this, 0);" style="background: #2cb4f0;"></div>
+        <div onclick="adjustModelColor(this, 110);" style="background: #ff69e4;"></div>
+        <div onclick="adjustModelColor(this, 290);" style="background: #16b83f;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="product-box">
+    <div class="visual-container">
+      <div class="viewer-frame">
+        <model-viewer src="https://assets.codepen.io/3421562/panda_keyboard.glb" camera-orbit="64deg 25deg 64m" shadow-intensity="0.4"></model-viewer>
+      </div>
+    </div>
+    <div class="glass-layer">
+      <div class="blur-grid"><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    <div class="info-panel">
+      <h2>PandaKey</h2>
+      <p>Minimalist, bold, and unapologetically panda.</p>
+      <div class="color-palette">
+        <!-- <div onclick="adjustModelColor(this, 0);" style="background: #1e1e1e;"></div>
+        <div onclick="adjustModelColor(this, 0, 1);" style="background: #eee;"></div> -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const viewers = document.querySelectorAll('model-viewer');
+      const boxes = document.querySelectorAll('.product-box');
+      const orbitDefault = '64deg 25deg 64m';
+      const orbitHover = '90deg -42deg 80m';
+
+      const updateOrbit = (viewer, orbit) => {
+        viewer.setAttribute('camera-orbit', orbit);
+        viewer.setAttribute('interpolation-decay', '200');
+      };
+
+      boxes.forEach((box, idx) => {
+        const viewer = viewers[idx];
+        if (viewer) {
+          box.addEventListener('mouseenter', () => updateOrbit(viewer, orbitHover));
+          box.addEventListener('mouseleave', () => updateOrbit(viewer, orbitDefault));
+          viewer.addEventListener('load', () => {
+            viewer.classList.add('loaded');
+          });
+        } else {
+          console.warn(`Viewer not found for box index: ${idx}`);
+        }
+      });
+    })();
+
+    function adjustModelColor(el, hue, invert = 0) {
+      const box = el.closest('.product-box');
+      const viewer = box.querySelector('model-viewer');
+      if (viewer) {
+        viewer.style.filter = `hue-rotate(${hue}deg) invert(${invert})`;
+      }
+    }
+  </script>
+</body>
+</html>
